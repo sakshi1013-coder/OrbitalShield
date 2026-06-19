@@ -2,7 +2,7 @@ services:
 
   mongodb:
     image: mongo:8
-    container_name: orbitalshield-db
+    
 
     restart: always
 
@@ -16,7 +16,7 @@ services:
     build:
       context: ./backend
 
-    container_name: orbitalshield-backend
+    
 
     ports:
       - "5001:5001"
@@ -31,7 +31,7 @@ services:
     build:
       context: ./frontend
 
-    container_name: orbitalshield-frontend
+    
 
     ports:
       - "3000:3000"
