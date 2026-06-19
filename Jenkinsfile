@@ -3,11 +3,14 @@ pipeline {
 
     stages {
 
-        stage('Clean Environment') {
-            steps {
-                sh 'docker compose down --remove-orphans || true'
-            }
-        }
+       stage('Clean Environment') {
+    steps {
+        sh '''
+        docker compose down --remove-orphans || true
+        docker rm -f $(docker ps -aq --filter "name=orbitalshield") || true
+        '''
+    }
+}
 
         stage('Build') {
             steps {
