@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+
+  mongodb:
+    image: mongo:8
+    container_name: orbitalshield-db
+
+    restart: always
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: orbitalshield-backend
+
+    ports:
+      - "5001:5001"
+
+    env_file:
+      - ./backend/.env.docker
+
+    depends_on:
+      - mongodb
+
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: orbitalshield-frontend
+
+    ports:
+      - "3000:3000"
+
+    stdin_open: true
+
+    tty: true
+
+    depends_on:
+      - backend
+
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  mongo-data:
