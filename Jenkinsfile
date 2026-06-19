@@ -2,15 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
 
         stage('Clean Environment') {
             steps {
-                sh 'docker rm -f orbitalshield-db orbitalshield-backend orbitalshield-frontend || true'
                 sh 'docker compose down --remove-orphans || true'
             }
         }
@@ -30,6 +24,7 @@ pipeline {
         stage('Verify') {
             steps {
                 sh 'docker ps'
+                sh 'docker compose ps'
             }
         }
     }
