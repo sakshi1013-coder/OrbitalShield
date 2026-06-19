@@ -56,6 +56,17 @@ pipeline {
             }
         }
 
+        stage('Application Health Check') {
+            steps {
+                echo 'Waiting 10 seconds for services to initialize...'
+                sh 'sleep 10'
+                echo 'Verifying frontend accessibility...'
+                sh 'curl -f http://localhost:3000'
+                echo 'Verifying backend API dashboard stats endpoint...'
+                sh 'curl -f http://localhost:5001/api/dashboard/stats'
+            }
+        }
+
         stage('Verify Containers Running') {
             steps {
                 echo 'Verifying that all containers started successfully...'
